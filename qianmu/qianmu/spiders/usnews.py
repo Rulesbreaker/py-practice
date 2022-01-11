@@ -15,7 +15,7 @@ class UsnewsSpider(scrapy.Spider):
         response = response.replace(body=response.text.replace('\t', '').replace('\r\n', ''))
         item = UniversityItem()
         data = {}
-        item['name'] = response.xpath('//div[@id="wikiContent"]/h1/text()')[0]
+        item['name'] = response.xpath('//div[@id="wikiContent"]/h1/text()').extract_first()
         print(item['name'])
         table = response.xpath(
             '//div[@id="wikiContent"]/div[@class="infobox"]/table')
@@ -31,11 +31,12 @@ class UsnewsSpider(scrapy.Spider):
             #     values.append(' '.join(col.xpath('.//text()')))
             if len(keys) == len(values):
                 data.update(zip(keys, values))
+        print(data)
         # yield出去的数据，会被框架接受，进行下一步的处理
         # 如果没有任何处理，会打印到控制台里
         item['rank'] = data.get('排名')
         item['country'] = data.get('国家')
-        item['state'] = data.get('周省')
+        item['state'] = data.get('州省')
         item['city'] = data.get('城市')
         item['undergraduate_num'] = data.get('本科生人数')
         item['postgraduate_num'] = data.get('研究生人数')
