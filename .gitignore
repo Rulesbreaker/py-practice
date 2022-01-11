@@ -1,6 +1,7 @@
 # created by virtualenv automatically
-/xpc/
+# /xpc/
 /ti/
+*/.idea/
 /http_samples/.idea/
 /qianmu/.idea/
 /qianmu/.scrapy/
